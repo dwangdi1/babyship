@@ -18,25 +18,13 @@ const App = ()=> {
       dispatch(fetchCart());
     }
   }, [auth]);
+
   return (
     <div>
-      <h1>Acme Shopping</h1>
-      {
-        auth.id ? <Home /> : <Login />
-      }
-      {
-        !!auth.id  && (
-          <div>
-            <nav>
-              <Link to='/'>Home</Link>
-              <Link to='/cart'>Cart</Link>
-            </nav>
-            <Routes>
-              <Route path='/cart' element={ <Cart /> } />
-            </Routes>
-          </div>
-        )
-      }
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/cart' element={ <Cart /> } />
+      </Routes>
     </div>
   );
 };

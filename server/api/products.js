@@ -1,8 +1,6 @@
 const express = require('express');
 const app = express.Router();
-const {Product} = require("../db/Product");
-
-
+const Product = require("../db/Product");
 
 app.get('/', async(req,res,next) => {
     try {
@@ -25,7 +23,6 @@ app.get('/:id', async(req, res, next) => {
 
 app.put('/:id', async(req, res, next)=> {
     try {
-      console.log('connect with database, products.js');
       const token = req.headers.authorization;
       if (token){
         const{quantity} = req.body; 

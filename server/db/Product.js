@@ -1,6 +1,6 @@
 const conn = require('./conn');
-const { ARRAY, STRING, UUID, UUIDV4, TEXT} = conn.Sequelize;
-const {Reviews} = require("./Review");
+const { INTEGER, ARRAY, FLOAT, STRING, UUID, UUIDV4, TEXT} = conn.Sequelize;
+const Reviews = require("./Reviews");
 
 const Product = conn.define('product', {
   id: {
@@ -17,6 +17,10 @@ const Product = conn.define('product', {
   },
   productType: {
     type: STRING,
+    allowNull: false,
+  },
+  price:{
+    type: FLOAT,
     allowNull: false,
   },
   images: {

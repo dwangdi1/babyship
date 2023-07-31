@@ -1,7 +1,7 @@
 const conn = require('./conn');
 const { INTEGER, UUID, UUIDV4, TEXT} = conn.Sequelize;
-const {Product} = require("./Product")
-const {User} = require("./User")
+const Product = require("./Product")
+const User = require("./User")
 
 const Reviews = conn.define('review', {
     id: {
@@ -24,7 +24,7 @@ const Reviews = conn.define('review', {
 });
 
 Reviews.belongsTo(User, {foreignKey: 'userId'})
-Reviews.belongsTo(Product, { foreignKey: 'productId' });
+//Reviews.belongsTo(Product, { foreignKey: 'productId' });
 
 
 module.exports = Reviews;
