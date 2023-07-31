@@ -4,10 +4,10 @@ const Product = require('./Product');
 const Order = require('./Order');
 const LineItem  = require('./LineItem');
 
-Order.belongsTo(User);
-LineItem.belongsTo(Order);
-Order.hasMany(LineItem);
-LineItem.belongsTo(Product);
+Order.belongsTo(User, {foreignKey: 'userId', onDelete: 'CASCADE'});
+LineItem.belongsTo(Order, {onDelete: 'CASCADE'});
+Order.hasMany(LineItem, { onDelete: 'CASCADE'}) ;
+LineItem.belongsTo(Product, {onDelete: 'CASCADE'});
 
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });

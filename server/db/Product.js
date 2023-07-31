@@ -1,5 +1,6 @@
 const conn = require('./conn');
-const { STRING, UUID, UUIDV4 } = conn.Sequelize;
+const { ARRAY, STRING, UUID, UUIDV4, TEXT} = conn.Sequelize;
+const {Reviews} = require("./Review");
 
 const Product = conn.define('product', {
   id: {
@@ -14,6 +15,24 @@ const Product = conn.define('product', {
       notEmpty: true
     }
   },
+  productType: {
+    type: STRING,
+    allowNull: false,
+  },
+  images: {
+    type: ARRAY(STRING),
+    defaultValue:[]
+  },
+  description:{
+    type: TEXT,
+  },
+  quantity: {
+    type: INTEGER,
+    default: 1
+  }
 });
+
+Product.hasMany(Reviews, { as: 'reviews', foreignKey: 'productId' });
+
 
 module.exports = Product;
