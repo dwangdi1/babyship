@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store";
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import { Col, Row } from "react-bootstrap";
 
 
 const AllProducts = () => {
@@ -11,18 +14,38 @@ const AllProducts = () => {
         dispatch(fetchProducts());
     },[dispatch])
 
+
     return (
-        <div>
+        // <div>
+        //     {products.map((product) => (
+        //         <div key={product.id}>
+        //             <h1>{product.name}</h1>
+        //             <img 
+        //                 src={product.images[0]}
+        //             />
+        //             <p>{product.price}</p>
+        //         </div>
+        //     ))}
+        // </div> 
+    <div>
+        <Row xs={1} md={3}>
             {products.map((product) => (
-                <div key={product.id}>
-                    <h1>{product.name}</h1>
-                    <img 
-                        src={product.images[0]}
-                    />
-                    <p>{product.price}</p>
-                </div>
+                <Col key={product.id} >
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src={product.images[0]} />
+                        <Card.Body>
+                            <Card.Title>{product.name}</Card.Title>
+                            <Card.Text>
+                                {product.description}
+                            </Card.Text>
+                            <Button variant="primary">Details</Button>
+                            <Button variant="primary">Add To Cart</Button>
+                        </Card.Body>
+                    </Card>
+                </Col>
             ))}
-        </div> 
+        </Row>
+    </div>
     )
 }
 
