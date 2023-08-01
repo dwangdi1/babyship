@@ -28,6 +28,7 @@ const syncAndSeed = async()=> {
       description: "Baby Safety Helmet Head Protection Hat Toddler Anti-fall Pad Children Learn To Walk Crash Cap Adjustable Protective Headgear. This section is filled with high-quality cotton + high-elastic sponge, which has good protection. Silk wool is not used for cost reduction, most of the low-priced ones on the market are silk wool.",
       quantity: 20,
       price: 8.25,
+      salesCount: 5,
     }),
     User.create({ username: 'ethyl', password: '123' }),
     Product.create({ 
@@ -39,6 +40,7 @@ const syncAndSeed = async()=> {
       description: "Winter Children Warm Baby Knitted Hats With Pom Pom Kids Knit Beanie Hats Solid Color Children's Hat For Boys Girls Accessories",
       quantity: 10,
       price: 7.45,
+      salesCount: 13,
     }),
     Product.create({ 
       name: 'Thick Baby Blanket', 
@@ -51,6 +53,7 @@ const syncAndSeed = async()=> {
       description: "Thickened Solid Color Flannel Pineapple Plaid Baby Blanket Swaddle Blanket Children Sofa Blanket Throw Blanket",
       quantity: 10,
       price: 7.45,
+      salesCount: 2,
     }),
     Product.create({ 
       name: 'Baby Swaddle Blanket', 
@@ -62,6 +65,7 @@ const syncAndSeed = async()=> {
       description: "2PCS Cotton Newborn Sleepsack Baby Swaddle Blanket Wrap Hat Set Infant Adjustable New Born Sleeping Bag Muslin Blankets 0-6M",
       quantity: 10,
       price: 7.45,
+      salesCount:23
     }),
     Product.create({ 
       name: 'Baby Romper', 

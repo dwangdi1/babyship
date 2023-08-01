@@ -11,6 +11,17 @@ app.get('/', async(req,res,next) => {
     }
 });
 
+app.get("/top-sellers", async (req, res, next) => {
+    try {
+        const topSellers = await Product.findAll({
+            order: [['salesCount', 'DESC']],
+            limit: 4,
+        });
+        res.send(topSellers);
+    } catch (err) {
+      next(err);     
+    }
+ });
 
 app.get('/:id', async(req, res, next) => { 
     try {
@@ -50,7 +61,9 @@ app.put('/:id', async(req, res, next)=> {
       next(ex);
     }
   });
-  
+
+ 
+ 
 
   
   module.exports = app;

@@ -33,7 +33,11 @@ const Product = conn.define('product', {
   quantity: {
     type: INTEGER,
     default: 1
-  }
+  },
+  salesCount: {
+    type: INTEGER,
+    defaultValue: 0,
+  },
 });
 
 Product.hasMany(Reviews, { as: 'reviews', foreignKey: 'productId' });

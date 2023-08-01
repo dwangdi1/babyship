@@ -7,6 +7,7 @@ import { loginWithToken, fetchCart } from '../store';
 import { Routes, Route } from 'react-router-dom';
 import NavbarHome from './Navbar';
 import Register from './Register';
+import AllProducts from './AllProducts';
 
 const App = ()=> {
   const { auth } = useSelector(state => state);
@@ -30,6 +31,7 @@ const App = ()=> {
           <Route path='/cart' element={ <Cart /> } />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} /> 
+          <Route path='/all-products' element={<AllProducts />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </div>

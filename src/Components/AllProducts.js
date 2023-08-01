@@ -28,6 +28,7 @@ const AllProducts = () => {
         //     ))}
         // </div> 
     <div>
+        <h1>All Products: </h1>
         <Row xs={1} md={3}>
             {products.map((product) => (
                 <Col key={product.id} >
