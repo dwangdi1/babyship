@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { attemptLogin, registerUser } from '../store';
 
 export default function Register() {
 
@@ -14,19 +15,51 @@ export default function Register() {
         email: ""
     })
 
+    const [registerError, setRegisterError] = useState("");
     const [pCheck, setPCheck] = useState("");
     
 
     const onChange = (ev) => {
-        setCredentials({...crednetials, [ev.target.name]:[ev.target.value]})
+        setCredentials({...credentials, [ev.target.name]:[ev.target.value]})
     }
 
     const invalidCredentials = credentials.username === "" || credentials.password === "" || credentials.email === "";
 
     const handleRegister = async(ev) => {
         ev.preventDefault();
-        
-    }
+        if (credentials.password !== pCheck) {
+            setRegisterError('Passwords do not match. Please try again.');
+            return;
+        }
+
+        try {
+            const registrationResult = dispatch(registerUser(credentials));
+            if (registrationResult.payload.error) {
+              setRegisterError("Username or Email already in use. Please try again.");
+              return;
+            }
+
+            const loginResult = await dispatch(attemptLogin(credentials));
+            if (loginResult.payload) {
+      
+              setTimeout(async() =>{ const visitorOrder = JSON.parse(window.localStorage.getItem('visitorOrder'));
+                const token = window.localStorage.getItem('token');
+                if(visitorOrder){                
+                    for (const ele of visitorOrder) {
+                        await dispatch(addToCart(ele));
+                }
+                window.localStorage.removeItem('visitorOrder');
+                }
+               },500)
+              navigate("/");
+            } else {
+              setRegisterError("An error occurred during login. Please try again.");
+            }
+          } catch (error) {
+            console.error("Error during registration:", error);
+            setRegisterError("An error occurred during registration. Please try again.");
+          }
+    };
 
   return (
     <div>
@@ -40,15 +73,15 @@ export default function Register() {
                     Beanies & Blankets
                   </h2>
                   <div className="mb-3">
-                    <Form onSubmite={handleRegister}>
+                    <Form onSubmit={handleRegister}>
                       <Form.Group className="mb-3" controlId="Name">
-                        <Form.Label className="text-center">Name</Form.Label>
+                        <Form.Label className="text-center">Username</Form.Label>
                         <Form.Control 
                             onChange = {onChange} 
                             value={credentials.username}
                             name="username"
                             type="text"
-                            placeholder="Enter Name"              
+                            placeholder="Enter Username"              
                          />
                       </Form.Group>
 
@@ -79,7 +112,7 @@ export default function Register() {
                       </Form.Group>
                       <Form.Group
                         className="mb-3"
-                        controlId="formBasicPassword"
+                        controlId="formBasicPasswordCheck"
                       >
                         <Form.Label>Confirm Password</Form.Label>
                         <Form.Control 
@@ -100,6 +133,7 @@ export default function Register() {
                         </Button>
                       </div>
                     </Form>
+                    {registerError && <div>{registerError}</div>}
                     <div className="mt-3">
                       <p className="mb-0  text-center">
                         Already have an account?{' '}

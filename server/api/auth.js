@@ -21,3 +21,11 @@ app.get('/', async(req, res, next)=> {
     next(ex);
   }
 });
+
+app.post('/register', async(req,res,next) => {
+  try {
+    res.send(await User.create(req.body));
+  } catch (ex) {
+    next(ex);
+  }
+})
