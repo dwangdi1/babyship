@@ -20,46 +20,50 @@ export default function Register() {
     
 
     const onChange = (ev) => {
-        setCredentials({...credentials, [ev.target.name]:[ev.target.value]})
+        setCredentials({...credentials, [ev.target.name]:ev.target.value})
     }
 
     const invalidCredentials = credentials.username === "" || credentials.password === "" || credentials.email === "";
-
-    const handleRegister = async(ev) => {
-        ev.preventDefault();
+   
+  const handleRegister = async (ev) => {
+    ev.preventDefault();
+    try {
         if (credentials.password !== pCheck) {
             setRegisterError('Passwords do not match. Please try again.');
             return;
-        }
-
-        try {
-            const registrationResult = dispatch(registerUser(credentials));
-            if (registrationResult.payload.error) {
-              setRegisterError("Username or Email already in use. Please try again.");
-              return;
-            }
-
-            const loginResult = await dispatch(attemptLogin(credentials));
-            if (loginResult.payload) {
-      
-              setTimeout(async() =>{ const visitorOrder = JSON.parse(window.localStorage.getItem('visitorOrder'));
-                const token = window.localStorage.getItem('token');
-                if(visitorOrder){                
-                    for (const ele of visitorOrder) {
-                        await dispatch(addToCart(ele));
-                }
-                window.localStorage.removeItem('visitorOrder');
-                }
-               },500)
-              navigate("/");
-            } else {
-              setRegisterError("An error occurred during login. Please try again.");
-            }
-          } catch (error) {
-            console.error("Error during registration:", error);
-            setRegisterError("An error occurred during registration. Please try again.");
+        } 
+      const registrationResult = await dispatch(registerUser(credentials));
+      if (registrationResult.payload.error) {
+        setRegisterError("Username or Email already in use. Please try again.");
+        return;
+      }
+  
+      const loginResult = await dispatch(attemptLogin(credentials));
+      if (loginResult.payload) {
+        setTimeout(async() =>{ const visitorOrder = JSON.parse(window.localStorage.getItem('visitorOrder'));
+          const token = window.localStorage.getItem('token');
+          if(visitorOrder){
+          
+          for (const ele of visitorOrder) {
+            console.log('element:', ele);
+            await dispatch(addToCart(ele));
           }
-    };
+          window.localStorage.removeItem('visitorOrder');
+          }
+         },500)
+
+        navigate("/");
+
+
+      } else {
+        setRegisterError("An error occurred during login. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      setRegisterError("An error occurred during registration. Please try again.");
+    }
+  };
+
 
   return (
     <div>
@@ -118,7 +122,7 @@ export default function Register() {
                         <Form.Control 
                             onChange = {(e) => setPCheck(e.target.value)} 
                             value={pCheck}
-                            name="pCheck"
+                            name="confirmPassword"
                             type="password" 
                             placeholder="Password"
                         />

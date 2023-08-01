@@ -22,10 +22,17 @@ app.get('/', async(req, res, next)=> {
   }
 });
 
-app.post('/register', async(req,res,next) => {
+app.post('/register', async (req, res, next) => {
   try {
-    res.send(await User.create(req.body));
+    const newUser = await User.create(req.body);
+    res.send(newUser);
   } catch (ex) {
+    if (ex.name === 'SequelizeUniqueConstraintError') {
+      // If a unique constraint violation occurs (duplicate username or email), send an error response.
+      return res.status(409).send({ error: "Username or Email already in use. Please try again." });
+    }
+
     next(ex);
   }
-})
+});
+

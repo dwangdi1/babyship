@@ -13,9 +13,9 @@ LineItem.belongsTo(Product, {onDelete: 'CASCADE'});
 const syncAndSeed = async()=> {
   await conn.sync({ force: true });
   const [moe, lucy, larry, babyHat, ethyl] = await Promise.all([
-    User.create({ username: 'moe', password: '123' }),
-    User.create({ username: 'lucy', password: '123' }),
-    User.create({ username: 'larry', password: '123' }),
+    User.create({ username: 'moe', password: '123', email:"moe@test.com" }),
+    User.create({ username: 'lucy', password: '123' , email:"lucy@test.com"}),
+    User.create({ username: 'larry', password: '123' , email: "larry@test.com"}),
     Product.create({ 
       name: 'Baby Safety Helmet', 
       productType: 'hat', 

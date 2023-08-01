@@ -33,7 +33,7 @@ export const attemptLogin = createAsyncThunk("attemptLogin", async (cred, { reje
   }
 });
 
-export const registerUser = createAsyncThunk("registerUser", async(cred, {rejectWithValue}) => {
+export const registerUser = createAsyncThunk("Register", async (cred, { rejectWithValue }) => {
   try {
     let response = await axios.post('/api/auth/register', cred);
     window.localStorage.setItem('token', response.data);
@@ -43,11 +43,11 @@ export const registerUser = createAsyncThunk("registerUser", async(cred, {reject
       }
     });
     return response.data;
-    }
-      catch(ex){
-        return rejectWithValue(ex.response.data);
   }
-})
+  catch(ex){
+    return rejectWithValue(ex.response.data);
+  }
+});
 
 const authSlice = createSlice({
   name:"auth",
