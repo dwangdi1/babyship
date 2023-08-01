@@ -63,6 +63,63 @@ const syncAndSeed = async()=> {
       quantity: 10,
       price: 7.45,
     }),
+    Product.create({ 
+      name: 'Baby Romper', 
+      productType: 'clothing', 
+      images:[ 
+        "https://ae01.alicdn.com/kf/H237ff7c5d7734fe69354c3ee75feee02d.jpg",
+        "https://ae01.alicdn.com/kf/H495c579d95ab4c7f839597cd321ef5d9T.jpg",
+        "https://ae01.alicdn.com/kf/H53a1b3aa12e64197a0a68fcd6340df9cK.jpg?width=750&height=411&hash=1161"
+      ],
+      description: "Summer Infant Baby Boys Girls Romper Muslin Sleeveless Newborn Rompers Fashion Baby Clothing",
+      quantity: 10,
+      price: 7.45,
+    }),
+    Product.create({ 
+      name: 'Shower Hair Cup', 
+      productType: 'hat', 
+      images:[ 
+        "https://ae01.alicdn.com/kf/Sc754fed983fe4319838048a7de46e99cg.jpg?width=844&height=848&hash=1692",
+        "https://ae01.alicdn.com/kf/S3c0a356b9fb4407e9f47297f5722b5f0R.jpg?width=844&height=845&hash=1689",
+      ],
+      description: "Washing Hair Cup Kids Bath Tool\nFeature:\nSize:9.5*10.7cm\nLots of ways to play and learn: Pour, stack and float\nParents can use as a rinse cup\nAges 6 months to 1-3 years old\nInterior ridges create an even pour\nStands up when not in use or hangs by handle to dry",
+      quantity: 10,
+      price: 7.45,
+    }),
+    Product.create({ 
+      name: 'Newborn Cotton Socks', 
+      productType: 'clothing', 
+      images:[ 
+        "https://ae01.alicdn.com/kf/S046ce66f83434e31b04109466695ddf1d.jpg?width=790&height=1350&hash=2140",
+        "https://ae01.alicdn.com/kf/S046ce66f83434e31b04109466695ddf1d.jpg?width=790&height=1350&hash=2140",
+        "https://ae01.alicdn.com/kf/S55efe36aa40f4566a471eb99438247d8D.jpg?width=790&height=1545&hash=2335"
+      ],
+      description: "Baby socks autumn and winter cotton newborn boys and girls loose socks glue non-slip toddler",
+      quantity: 10,
+      price: 7.45,
+    }),
+    Product.create({ 
+      name: 'Summer Rompers', 
+      productType: 'clothing', 
+      images:[ 
+        "https://ae01.alicdn.com/kf/S0c7f6f34c39a454daf0adfe4f8e47ad2z.jpg",
+        "https://ae01.alicdn.com/kf/S8abc385ea73040979c19d1e97ace8158Y.jpg",
+      ],
+      description: "Baby Rompers Summer Newborn Baby Girl Clothes Boys Short Sleeve Jumpsuit Baby Clothes New Born Baby Items Bodysuit For Newborns",
+      quantity: 10,
+      price: 7.45,
+    }),
+    Product.create({ 
+      name: 'Cotton Fleece Blanket', 
+      productType: 'blanket', 
+      images:[ 
+        "https://ae01.alicdn.com/kf/S881327a0214b41c1aacbd42892629b7dn.jpg",
+        "https://ae01.alicdn.com/kf/Sf2d4f81978ab4775b973f2a76b0534b8F.jpg",
+      ],
+      description: "80x80 Newborn Wrap Blanket Cotton Fleece Blanket for 0-12 Months Baby 4 Seasons Absorbent Warm Blanket Children Bath Towel DDJ",
+      quantity: 10,
+      price: 7.45,
+    }),
   ]);
 
   const cart = await ethyl.getCart();

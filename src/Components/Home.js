@@ -8,8 +8,9 @@ const Home = ()=> {
   const dispatch = useDispatch();
   return (
     <div>
-      <h1>Home</h1>
+      <h1>Home, Welcome {auth.username}</h1>
       <h1>All Products: </h1>
+
       <AllProducts />
     </div>
   );

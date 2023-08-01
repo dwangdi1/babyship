@@ -4,7 +4,9 @@ import Login from './Login';
 import Cart from './Cart';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginWithToken, fetchCart } from '../store';
-import { Link, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import NavbarHome from './Navbar';
+import Register from './Register';
 
 const App = ()=> {
   const { auth } = useSelector(state => state);
@@ -21,11 +23,17 @@ const App = ()=> {
 
   return (
     <div>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/cart' element={ <Cart /> } />
-      </Routes>
-    </div>
+      <NavbarHome />
+      <div>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/cart' element={ <Cart /> } />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} /> 
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </div>
+  </div>
   );
 };
 
