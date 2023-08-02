@@ -8,6 +8,7 @@ import { Routes, Route } from 'react-router-dom';
 import NavbarHome from './Navbar';
 import Register from './Register';
 import AllProducts from './AllProducts';
+import SingleProduct from './SingleProduct';
 
 const App = ()=> {
   const { auth } = useSelector(state => state);
@@ -28,6 +29,7 @@ const App = ()=> {
       <div>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/:id' element={<SingleProduct /> } />
           <Route path='/cart' element={ <Cart /> } />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} /> 
