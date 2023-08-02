@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { fetchProducts, fetchTopSellers } from '../store';
+import { addToCart, fetchProducts, fetchTopSellers, updateProductQuantity } from '../store';
 import { Button } from 'react-bootstrap';
 const Home = ()=> {
   const { auth, topSellers } = useSelector(state => state);
@@ -15,6 +15,11 @@ const Home = ()=> {
     dispatch(fetchTopSellers());
     dispatch(fetchProducts());
   },[dispatch])
+
+  const handleAddToCart = (product) => {
+    dispatch(updateProductQuantity({product: product, quantity: 1}));
+    dispatch(addToCart({product:product, quantity: 1}));
+};
 
   return (
     <div>
@@ -31,7 +36,7 @@ const Home = ()=> {
                     {product.description}
                   </Card.Text>
                   <Button href={`#/${product.id}`}variant="primary">Details</Button>
-                  <Button variant="primary">Add To Cart</Button>
+                  <Button onClick={() => handleAddToCart(product)} variant="primary">Add To Cart</Button>
                 </Card.Body>
               </Card>
             </Col>

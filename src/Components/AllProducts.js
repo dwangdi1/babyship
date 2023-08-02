@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store";
+import { addToCart, fetchProducts, updateProductQuantity } from "../store";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Col, Row } from "react-bootstrap";
@@ -14,6 +14,10 @@ const AllProducts = () => {
         dispatch(fetchProducts());
     },[dispatch])
 
+    const handleAddToCart = (product) => {
+        dispatch(updateProductQuantity({product: product, quantity: 1}));
+        dispatch(addToCart({product:product, quantity: 1}));
+    };
 
     return (
         <div>
