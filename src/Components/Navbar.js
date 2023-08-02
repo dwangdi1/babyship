@@ -1,28 +1,72 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../store';
+import { fetchCart, logout } from '../store';
 import { Button, Modal } from 'react-bootstrap';
 
 function NavbarHome() {
     const dispatch =  useDispatch();
     const navigate = useNavigate();
     const token = window.localStorage.getItem('token');
+    const visitorOrder = JSON.parse(window.localStorage.getItem("visitorOrder"));
     const user = useSelector((state) => state.auth);
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-
+    const {cart} = useSelector((state) => state)
+    
+    const [items, setItems] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalQ, setTotalQ] = useState(0);
 
     const handleLogout = () => {
         dispatch(logout());
         navigate("/");
     }
+
+    useEffect(() => {
+        let list;
+        if (token) {
+           list = [...cart.lineItems];
+        } else {
+           if (visitorOrder) {
+              const listTemp = [...visitorOrder];
+              list = listTemp.filter((ele) => ele.quantity !== 0);
+              list = visitorOrder;
+           } else {
+              list = [];
+           }
+        }
+        if (list) {
+           list.sort(function (a, b) {
+              if (a.product.name < b.product.name) {
+                 return -1;
+              }
+              if (a.product.name > b.product.name) {
+                 return 1;
+              }
+              return 0;
+           });
+        }
+
+        const sumPrice = list.reduce((acc, curr) => {
+           acc = acc + curr.product.price * curr.quantity;
+           return acc;
+        }, 0);
+        const sumQ = list.reduce((acc, curr) => {
+           acc = acc + curr.quantity;
+           return acc;
+        }, 0);
+        setItems(list);
+        setTotalPrice(sumPrice);
+        setTotalQ(sumQ);
+     }, [cart]);
+
+
     const headingStyle = {
         fontSize: '30px',
       };
@@ -76,7 +120,7 @@ function NavbarHome() {
                 <Modal.Title>Shopping Cart</Modal.Title>
             </Modal.Header>   
             <Modal.Body >
-                <h1>Modal body</h1>
+                <h1>Total: {totalPrice}</h1>
             </Modal.Body>         
 
         </Modal>
