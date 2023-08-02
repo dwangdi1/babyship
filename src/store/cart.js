@@ -35,7 +35,7 @@ const handelNewRemoveFromCart = (visitorOrder, { product, quantityToRemove }) =>
    let index = visitorOrder.findIndex((lineItem) => {
       return lineItem.productId === product.id;
    });
-   
+
    if (index !== -1) {
       visitorOrder[index].quantity -= quantityToRemove;
    }
@@ -145,7 +145,7 @@ const cartSlice = createSlice({
             return action.payload;
          }
       });
-      builder.addCase(removeFromCart.fulfilled, (state, action) => {
+      builder.addCase(removeFromCart.fulfilled, (state, action) => { 
          return action.payload;
       });
       builder.addCase(checkoutCart.fulfilled, (state, action) => {

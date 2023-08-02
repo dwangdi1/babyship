@@ -5,8 +5,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchCart, logout } from '../store';
+import { fetchCart, logout, removeFromCart, updateProductQuantity } from '../store';
 import { Button, Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function NavbarHome() {
     const dispatch =  useDispatch();
@@ -18,7 +19,7 @@ function NavbarHome() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const {cart} = useSelector((state) => state)
-    
+
     const [items, setItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQ, setTotalQ] = useState(0);
@@ -27,6 +28,10 @@ function NavbarHome() {
         dispatch(logout());
         navigate("/");
     }
+
+    useEffect(() => {
+        dispatch(fetchCart())
+    },[dispatch]);
 
     useEffect(() => {
         let list;
@@ -120,6 +125,39 @@ function NavbarHome() {
                 <Modal.Title>Shopping Cart</Modal.Title>
             </Modal.Header>   
             <Modal.Body >
+                {items.length === 0 ? (
+                    <div className="text-center">
+                        <h3>Your shopping cart is empty.</h3>
+                        <button className="btn btn-outline-secondary">
+                            <Link to="/" className="text-decoration-none text-muted">
+                            Start shopping
+                            </Link>
+                        </button>
+                    </div>
+                ) : (
+                    <>
+                        {items.map((item) => (
+                            <div key={item.productId} className="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h5>{item.product.name}</h5>
+                                <p>Quantity: {item.quantity}</p>
+                                <p>Price: {item.product.price * item.quantity}</p>
+                            </div>
+                            <button className="btn btn-danger" 
+                                onClick={() => {
+                                    if (item.quantity >= 1) {
+                                        dispatch(
+                                            updateProductQuantity({ product: item.product, quantity: -1 })
+                                    );
+                                    dispatch(
+                                        removeFromCart({ product: item.product, quantityToRemove: 1 })
+                                    );
+                                    }}}
+                                >Remove</button>
+                            </div>
+                        ))}
+                    </>
+                )}
                 <h1>Total: {totalPrice}</h1>
             </Modal.Body>         
 

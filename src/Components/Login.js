@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { attemptLogin } from '../store';
+import { addToCart, attemptLogin } from '../store';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
@@ -11,16 +11,43 @@ const Login = ()=> {
     username: '',
     password: ''
   });
+  const [loginError, setLoginError] = useState("");
+
 
   const onChange = ev => {
     setCredentials({...credentials, [ ev.target.name ]: ev.target.value });
   };
 
-  const login = (ev)=> {
+  const login = async(ev) => {
     ev.preventDefault();
     dispatch(attemptLogin(credentials));
-    navigate("/")
-  };
+    try {
+      const resultAction = await dispatch(attemptLogin(credentials));
+      const success = resultAction.type.endsWith("/fulfilled");
+      if (success) {
+         setTimeout(async () => {
+            const visitorOrder = JSON.parse(window.localStorage.getItem("visitorOrder"));
+
+            const token = window.localStorage.getItem("token");
+
+            if (visitorOrder) {
+               for (const ele of visitorOrder) {
+                  console.log("element:", ele);
+                  await dispatch(addToCart(ele));
+               }
+               window.localStorage.removeItem("visitorOrder");
+            }
+         }, 500);
+
+         navigate("/");
+      } else {
+         setLoginError("Invalid credentials. Please try again.");
+      }
+   } catch (error) {
+      console.error("Error during login:", error);
+      setLoginError("An error occurred during login. Please try again.");
+   }
+ };
 
   const invalidCredentials = credentials.username === "" || credentials.password === "";
 
@@ -77,6 +104,7 @@ const Login = ()=> {
                         </a>
                       </p>
                     </div>
+                    {loginError && <div>{loginError}</div>}
                   </div>
                 </div>
               </Card.Body>
