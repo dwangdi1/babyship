@@ -29,7 +29,7 @@ const AllProducts = () => {
                                     {product.description}
                                 </Card.Text>
                                 <Button href={`#/${product.id}`} variant="primary">Details</Button>
-                                <Button variant="primary">Add To Cart</Button>
+                                <Button onClick={() => handleAddToCart(product)} variant="primary">Add To Cart</Button>
                             </Card.Body>
                         </Card>
                     </Col>
