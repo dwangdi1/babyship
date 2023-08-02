@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+require('dotenv').config()
 app.use(express.json());
 
 app.use('/dist', express.static(path.join(__dirname, '../dist')));

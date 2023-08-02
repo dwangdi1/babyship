@@ -159,6 +159,7 @@ function NavbarHome() {
                     </>
                 )}
                 <h1>Total: {totalPrice}</h1>
+                <Button className="btn btn-success">Checkout</Button>
             </Modal.Body>         
 
         </Modal>
