@@ -11,28 +11,34 @@ module.exports = app;
 const priceIds = [
     {name: "Baby Swaddle Blanket", priceId: process.env.BABY_SWADDLE_BLANKET},
     {name: "Warm Baby Knitted Hat", priceId: process.env.WARM_BABY_KNITTED_HAT},
-    {name: "Thick Baby Blanket", pricedId: process.env.THICK_BABY_BLANKET},
+    {name: "Thick Baby Blanket", priceId: process.env.THICK_BABY_BLANKET},
     {name: "Baby Safety Helmet", priceId: process.env.BABY_SAFETY_HELMET}
 ];
 
 app.post("/checkout", async(req, res) => {
-
     const items = req.body.items;
     let lineItems = [];
     items.forEach((item) => {
-        lineItems.push(
-            {
-                price: item.id,
-                quantity: item.quantity
-            }
-        )
+        const matchedPrice = priceIds.find((p) => p.name === item.product.name);
+        if(matchedPrice){
+            lineItems.push(
+                {
+                    price: matchedPrice.priceId,
+                    quantity: item.quantity
+                }
+            );
+        }
+        
     });
 
     const session = await stripe.checkout.sessions.create({
         line_items: lineItems,
         mode: 'payment',
         success_url:"http://localhost:3000/success",
-        cancel_url: "http://localhost:3000/cancel"
+        cancel_url: "http://localhost:3000/cancel",
+        shipping_address_collection: {
+            allowed_countries: ['US', 'CA'], // You can specify the list of allowed countries here.
+         },
     });
 
     res.send(JSON.stringify({

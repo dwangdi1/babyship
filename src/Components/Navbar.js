@@ -24,6 +24,25 @@ function NavbarHome() {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalQ, setTotalQ] = useState(0);
 
+
+    const checkout = async () => {
+        await fetch('/api/payment/checkout', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", 
+          },
+          body: JSON.stringify({ items }), 
+        }).then((response) => {
+          return response.json();
+        }).then((response) => {
+          if (response.url) {
+            window.location.assign(response.url);
+          }
+        });
+    }
+      
+
+
     const handleLogout = () => {
         dispatch(logout());
         navigate("/");
@@ -159,7 +178,7 @@ function NavbarHome() {
                     </>
                 )}
                 <h1>Total: {totalPrice}</h1>
-                <Button className="btn btn-success">Checkout</Button>
+                <Button onClick={checkout} className="btn btn-success">Checkout</Button>
             </Modal.Body>         
 
         </Modal>
