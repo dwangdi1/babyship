@@ -8,6 +8,7 @@ import NavbarHome from './Navbar';
 import Register from './Register';
 import AllProducts from './AllProducts';
 import SingleProduct from './SingleProduct';
+import Success from './Success';
 
 const App = ()=> {
   const { auth } = useSelector(state => state);
@@ -32,6 +33,7 @@ const App = ()=> {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} /> 
           <Route path='/all-products' element={<AllProducts />} />
+          <Route path='/success' element={<Success />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </div>

@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { addToCart, fetchProducts, fetchTopSellers, updateProductQuantity } from '../store';
 import { Button } from 'react-bootstrap';
+
 const Home = ()=> {
   const { auth, topSellers } = useSelector(state => state);
   const dispatch = useDispatch();
