@@ -13,14 +13,9 @@ const Success = () => {
       dispatch(checkoutCart());
     }
 
-    // window.localStorage.removeItem("visitorOrder");
+    window.localStorage.removeItem("visitorOrder");
 
-    // window.history.replaceState(
-    //   {},
-    //   document.title,
-    //   window.location.pathname + window.location.hash
-    // );
-  }, [dispatch, cart]);
+  }, [dispatch, cart.lineItems.length]);
 
 
   return (
