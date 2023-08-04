@@ -19,6 +19,8 @@ function NavbarHome() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const {cart} = useSelector((state) => state)
+    const [sum, setSum] = useState(0);
+
 
     const [items, setItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -41,6 +43,28 @@ function NavbarHome() {
         });
     }
       
+    useEffect(() => {
+        let list;
+        if (token) {
+           if (cart.lineItems) {
+              list = [...cart.lineItems];
+           } else {
+              list = [];
+           }
+        } else {
+           if (visitorOrder) {
+              list = [...visitorOrder];
+           } else {
+              list = [];
+           }
+        }
+        if (list) {
+           const totalQ = list.reduce((acc, curr) => {
+              return (acc = acc + curr.quantity);
+           }, 0);
+           setSum(totalQ);
+        }
+     }, [cart, user]);
 
 
     const handleLogout = () => {
@@ -122,6 +146,23 @@ function NavbarHome() {
                         <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
                     </svg>
                 </div>
+                <i
+                           className="fas fa-shopping-cart fs-3 align-middle position-relative"
+                           style={{ color: "black" }}>
+                           {sum ? (
+                              <span
+                                 className="badge border border-light rounded-circle bg-danger"
+                                 style={{
+                                    fontSize: "10px",
+                                    fontFamily: "tahoma",
+                                    position: "absolute",
+                                    top: "-40%",
+                                    right: "-50%"
+                                 }}>
+                                 {sum}
+                              </span>
+                           ) : null}
+                </i>
             </Nav>
             <Nav>
                 {!token ? (
@@ -130,7 +171,7 @@ function NavbarHome() {
                 // Add the logic for the user menu or profile here
                 // For example:
                 <>
-                    <Nav.Link href="/profile">Profile</Nav.Link>
+                    <Nav.Link href="#/profile">Profile</Nav.Link>
                     <Button onClick={() => handleLogout()}>Logout</Button>
                 </> 
                 )}

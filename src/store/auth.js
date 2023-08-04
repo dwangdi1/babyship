@@ -49,6 +49,30 @@ export const registerUser = createAsyncThunk("Register", async (cred, { rejectWi
   }
 });
 
+export const updateUserProfile = createAsyncThunk(
+  'updateUserProfile',
+  async (updatedProfile, { rejectWithValue }) => {
+    try {
+      const token = window.localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const response = await axios.put('/api/auth', updatedProfile, {
+        headers: {
+          authorization: token,
+        },
+      });
+
+      return response.data;
+    } catch (ex) {
+      return rejectWithValue(ex.response.data);
+    }
+  }
+);
+
+
+
 const authSlice = createSlice({
   name:"auth",
   initialState,
@@ -65,7 +89,10 @@ const authSlice = createSlice({
     builder.addCase(attemptLogin.fulfilled, (state, action)=>{
       return action.payload;
     })
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    builder.addCase(registerUser.fulfilled, (state, action)=>{
+      return action.payload;
+    })
+    builder.addCase(updateUserProfile.fulfilled, (state,action) => {
       return action.payload;
     })
   }

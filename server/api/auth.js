@@ -36,3 +36,29 @@ app.post('/register', async (req, res, next) => {
   }
 });
 
+app.put('/', async (req, res, next) => {
+  try {
+    const { username, password, email } = req.body;
+    const user = await User.findByToken(req.headers.authorization);
+
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+
+    if (username) {
+      user.username = username;
+    }
+    if (password) {
+      user.password = password;
+    }
+    if (email) {
+      user.email = email;
+    }
+
+    await user.save();
+
+    res.send(user);
+  } catch (ex) {
+    next(ex);
+  }
+});

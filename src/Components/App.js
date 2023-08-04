@@ -10,6 +10,7 @@ import AllProducts from './AllProducts';
 import SingleProduct from './SingleProduct';
 import Success from './Success';
 import Cancel from './Cancel';
+import Profile from './Profile';
 
 const App = ()=> {
   const { auth } = useSelector(state => state);
@@ -34,6 +35,7 @@ const App = ()=> {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} /> 
           <Route path='/all-products' element={<AllProducts />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
           <Route path="*" element={<Home />} />
