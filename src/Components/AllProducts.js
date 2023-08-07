@@ -17,11 +17,18 @@ const AllProducts = () => {
     },[dispatch])
 
     const handleAddToCart = (product) => {
-        dispatch(updateProductQuantity({product: product, quantity: 1}));
-        dispatch(addToCart({product:product, quantity: 1}));
-        toast.success(`${product.name} added to cart!`);
-    };
-
+        dispatch(updateProductQuantity({ product: product, quantity: 1 }))
+          .then(() => {
+            return dispatch(addToCart({ product: product, quantity: 1 }));
+          })
+          .then(() => {
+            dispatch(fetchProducts());
+            toast.success(`${product.name} added to cart!`);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
     if(!products) {
         return null;
     }

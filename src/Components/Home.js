@@ -10,7 +10,7 @@ import { addToCart, fetchProducts, fetchTopSellers, updateProductQuantity } from
 import { Button } from 'react-bootstrap';
 
 const Home = ()=> {
-  const { auth, topSellers } = useSelector(state => state);
+  const { auth, products, topSellers } = useSelector(state => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,11 +20,19 @@ const Home = ()=> {
   },[dispatch])
 
   const handleAddToCart = (product) => {
-    dispatch(updateProductQuantity({product: product, quantity: 1}));
-    dispatch(addToCart({product:product, quantity: 1}));
-    toast.success(`${product.name} added to cart!`);
-
-};
+    dispatch(updateProductQuantity({ product: product, quantity: 1 }))
+      .then(() => {
+        return dispatch(addToCart({ product: product, quantity: 1 }));
+      })
+      .then(() => {
+        dispatch(fetchTopSellers());
+        toast.success(`${product.name} added to cart!`);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  
 
   return (
     <div>
