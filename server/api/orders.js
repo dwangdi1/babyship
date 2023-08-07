@@ -44,6 +44,13 @@ app.put('/checkout', async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
     const cart = await user.getCart();
+
+    for (const lineItem of cart.lineItems) {
+      const product = await Product.findByPk(lineItem.productId);
+      product.salesCount += lineItem.quantity;
+      await product.save();
+   }
+
     cart.isCart = false;
     await cart.save();
     res.send(cart);
@@ -51,6 +58,8 @@ app.put('/checkout', async (req, res, next) => {
     next(ex);
   }
 });
+
+
 
 
 app.post('/cart', async(req, res, next)=> {

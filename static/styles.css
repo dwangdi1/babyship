@@ -1,19 +1,100 @@
-body {
-  font-family: verdana;
+* {
+  font-family: "quiche-stencil", sans-serif;
+}
+/* -----About Page -----*/
+.about-page {
+  min-height: 100vh;
+  padding: 100px 0;
 }
 
-form {
+.about-page.bg-image {
+  background-image: url("https://img.freepik.com/free-photo/closeup-shot-one-ginger-cat-hugging-licking-other-isolated-white-wall_181624-32893.jpg?w=2000&t=st=1686803580~exp=1686804180~hmac=70fff4f3264d68daa4702fa45ad2f9d12c71d9fc2fd28ffeef555bc34886cdd0");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-attachment: fixed; /* Optional: Ensures the background stays fixed while scrolling */
+  opacity: 90%;
+}
+
+.about-page h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.about-page .grid-container {
+  max-width: 800px;
+  margin: 0 auto;
+  color: #000000;
+  text-indent: 2rem;
+}
+
+.custom-pointer:hover {
+  cursor: pointer;
+}
+
+.active {
+  color: darkred;
+}
+
+/* ----- Single Cat Page -----*/
+.vertical-center {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-form > * {
-  margin: 1rem;
+.description {
+  font-size: 1.2rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+  text-indent: 2rem;
 }
 
-nav {
-  display: flex;
-  justify-content: space-around;
+.cat-detail {
+  font-size: 20px;
+}
+/* ----- Single Product Page -----*/
+.product-detail {
+  font-size: 20px;
+}
+
+/* ----- Shopping Cart Page -----*/
+.custom-card {
+  box-shadow: 0 1px 15px 1px rgba(52, 40, 104, 0.08);
+}
+
+.ui-w-40 {
+  width: 75px !important;
+  height: auto;
+}
+
+.ui-product-color {
+  display: inline-block;
+  overflow: hidden;
+  margin: 0.144em;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 10rem;
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15) inset;
+  vertical-align: middle;
+}
+
+/* ----- Order History Page -----*/
+
+.search-bar-container {
+  width: 100%;
+  margin: 0 auto;
+  width: 350px;
+}
+
+.text-underline-hover {
+  text-decoration: none;
+}
+
+.text-underline-hover:hover {
+  text-decoration: underline;
 }
 
 /* ----- Edit Profile Page -----*/
@@ -101,4 +182,241 @@ nav {
 .registration-form .social-icons a:hover {
   text-decoration: none;
   opacity: 0.6;
+}
+
+/* ----- Home Page -----*/
+
+@keyframes rotatingElement {
+  0% {
+     transform: rotate(0);
+  }
+  100% {
+     transform: rotate(360deg);
+  }
+}
+
+.rotating-Element {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.rotating-Element span {
+  position: absolute;
+  display: block;
+  width: 6%;
+  pointer-events: visible;
+  cursor: pointer;
+  transform: translate(-50%, 50%);
+  transition: 2s linear;
+  opacity: 0.5;
+}
+
+.rotating-Element img {
+  width: 80%;
+  height: auto;
+  position: absolute;
+  animation: rotatingElement 8s linear infinite;
+}
+
+.rotating-Element span:first-child {
+  top: 10%; /* Adjust vertical position for the first image */
+  left: 10%; /* Adjust horizontal position for the first image */
+}
+
+.rotating-Element span:nth-child(2) {
+  top: 7%;
+  left: 40%;
+}
+.rotating-Element span:nth-child(3) {
+  top: 10%;
+  left: 80%;
+}
+
+.rotating-Element span:nth-child(4) {
+  top: 55%;
+  left: 25%;
+}
+.rotating-Element span:nth-child(5) {
+  top: 45%;
+  left: 45%;
+}
+.rotating-Element span:nth-child(6) {
+  top: 60%;
+  left: 90%;
+}
+.rotating-Element span:nth-child(7) {
+  top: 92%;
+  left: 10%;
+  filter: brightness(0) invert(1);
+}
+.rotating-Element span:nth-child(8) {
+  top: 92%;
+  left: 40%;
+  filter: brightness(0) invert(1);
+}
+.rotating-Element span:last-child {
+  top: 95%; /* Adjust vertical position for the second image */
+  left: 80%; /* Adjust horizontal position for the second image */
+}
+
+/* custom-pagination */
+
+.pagination .page-link {
+  background-color: white;
+  color: black;
+  border-color: white;
+}
+
+.pagination .page-link:hover {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
+.pagination .page-item.disabled .page-link {
+  background-color: white;
+  color: gray;
+  border-color: white;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
+
+
+/* Admin Mange user page */
+
+.card-small {
+  /* Customize the size of the card */
+  width: 100%;
+  max-width: 350px;
+}
+
+/* Team Page */
+.team-list img {
+  width: 50%;
+}
+
+.team-list .content {
+  width: 50%;
+}
+
+.team-list .content .follow {
+  position: absolute;
+  bottom: 24px;
+}
+
+.team-list:hover {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.team,
+.team-list {
+  -webkit-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+}
+
+.team .content .title,
+.team-list .content .title {
+  font-size: 18px;
+}
+
+.team .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.team .member-position,
+.team .team-social {
+  position: absolute;
+  bottom: -35px;
+  right: 0;
+  left: 0;
+  margin: auto 10%;
+  z-index: 99;
+}
+
+.team .team-social {
+  bottom: 40px;
+  opacity: 0;
+  -webkit-transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
+}
+
+.team:hover {
+  -webkit-transform: translateY(-7px);
+  transform: translateY(-7px);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.team:hover .overlay {
+  opacity: 0.6;
+}
+
+.team:hover .team-social {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .team-list img,
+  .team-list .content {
+     width: 100%;
+     float: none !important;
+  }
+  .team-list img .follow,
+  .team-list .content .follow {
+     position: relative;
+     bottom: 0;
+  }
+}
+
+.social-icon.social li a {
+  color: #707070;
+  border-color: #707070;
+}
+.social-icon li a {
+  color: #35404e;
+  border: 1px solid #35404e;
+  display: inline-block;
+  height: 32px;
+  text-align: center;
+  font-size: 15px;
+  width: 32px;
+  line-height: 30px;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  overflow: hidden;
+  position: relative;
+}
+.rounded {
+  border-radius: 5px !important;
+}
+
+.para-desc {
+  max-width: 600px;
+}
+.text-muted {
+  color: #8492a6 !important;
+}
+
+.section-title .title {
+  letter-spacing: 0.5px;
+  font-size: 3rem;
 }

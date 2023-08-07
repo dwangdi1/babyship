@@ -9,6 +9,11 @@ const Success = () => {
 
  
   useEffect(() => {
+    if(!auth){
+      window.localStorage.clear();
+    }
+
+
     if (cart.lineItems.length > 0) {
       dispatch(checkoutCart());
     }

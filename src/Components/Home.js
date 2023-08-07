@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { addToCart, fetchProducts, fetchTopSellers, updateProductQuantity } from '../store';
 import { Button } from 'react-bootstrap';
 
@@ -20,6 +22,8 @@ const Home = ()=> {
   const handleAddToCart = (product) => {
     dispatch(updateProductQuantity({product: product, quantity: 1}));
     dispatch(addToCart({product:product, quantity: 1}));
+    toast.success(`${product.name} added to cart!`);
+
 };
 
   return (
@@ -37,7 +41,10 @@ const Home = ()=> {
                     {product.description}
                   </Card.Text>
                   <Button href={`#/${product.id}`}variant="primary">Details</Button>
-                  <Button onClick={() => handleAddToCart(product)} variant="primary">Add To Cart</Button>
+                  <Button disabled={product.quantity <= 0} onClick={() => handleAddToCart(product)} variant="primary">
+                    {console.log(product.quantity)}
+                    {product.quantity > 0 ? <span>Add To Cart</span> : <span>Sold Out</span>}
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
@@ -46,6 +53,18 @@ const Home = ()=> {
         </div>
         
       <button onClick={() => navigate("/all-products")}>Click For All Products</button>
+      <ToastContainer
+            position="top-center"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable
+            pauseOnHover
+            theme="light"
+        />
     </div>
   );
 };

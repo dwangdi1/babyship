@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchProducts, updateProductQuantity } from "../store";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Col, Row } from "react-bootstrap";
 
 
@@ -17,7 +19,12 @@ const AllProducts = () => {
     const handleAddToCart = (product) => {
         dispatch(updateProductQuantity({product: product, quantity: 1}));
         dispatch(addToCart({product:product, quantity: 1}));
+        toast.success(`${product.name} added to cart!`);
     };
+
+    if(!products) {
+        return null;
+    }
 
     return (
         <div>
@@ -33,13 +40,27 @@ const AllProducts = () => {
                                     {product.description}
                                 </Card.Text>
                                 <Button href={`#/${product.id}`} variant="primary">Details</Button>
-                                <Button onClick={() => handleAddToCart(product)} variant="primary">Add To Cart</Button>
+                                <Button disabled={product.quantity === 0} onClick={() => handleAddToCart(product)} variant="primary">
+                                    {product.quantity > 0 ? <span>Add To Cart</span> : <span>Sold Out</span>}
+                                </Button>
                             </Card.Body>
                         </Card>
                     </Col>
                 ))}
             </Row>
-        </div>
+            <ToastContainer
+            position="top-center"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable
+            pauseOnHover
+            theme="light"
+            />
+      </div>
     )
 }
 
