@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchCart, logout, removeFromCart, updateProductQuantity } from '../store';
+import { fetchCart, fetchProducts, fetchTopSellers, logout, removeFromCart, updateProductQuantity } from '../store';
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -118,6 +118,13 @@ function NavbarHome() {
     const headingStyle = {
         fontSize: '30px',
       };
+
+      const handleRemoveFromCart = (product) => {
+        dispatch(updateProductQuantity({ product: product, quantity: -1 }));
+        dispatch(removeFromCart({ product: product, quantityToRemove: 1 }));
+        dispatch(fetchTopSellers()); // Update top sellers after removing from cart
+        dispatch(fetchProducts());   // Update all products after removing from cart
+     };
     
 
   return (
@@ -203,15 +210,7 @@ function NavbarHome() {
                                 <p>Price: {item.product.price * item.quantity}</p>
                             </div>
                             <button className="btn btn-danger" 
-                                onClick={() => {
-                                    if (item.quantity >= 1) {
-                                        dispatch(
-                                            updateProductQuantity({ product: item.product, quantity: -1 })
-                                    );
-                                    dispatch(
-                                        removeFromCart({ product: item.product, quantityToRemove: 1 })
-                                    );
-                                    }}}
+                                onClick={() => handleRemoveFromCart(item.product)}
                                 >Remove</button>
                             </div>
                         ))}
