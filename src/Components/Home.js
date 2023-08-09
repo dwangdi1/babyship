@@ -50,7 +50,6 @@ const Home = ()=> {
                   </Card.Text>
                   <Button href={`#/${product.id}`}variant="primary">Details</Button>
                   <Button disabled={product.quantity <= 0} onClick={() => handleAddToCart(product)} variant="primary">
-                    {console.log(product.quantity)}
                     {product.quantity > 0 ? <span>Add To Cart</span> : <span>Sold Out</span>}
                   </Button>
                 </Card.Body>

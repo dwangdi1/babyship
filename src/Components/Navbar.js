@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 function NavbarHome() {
     const dispatch =  useDispatch();
     const navigate = useNavigate();
+    const {auth} = useSelector((state) => state);
     const token = window.localStorage.getItem('token');
     const visitorOrder = JSON.parse(window.localStorage.getItem("visitorOrder"));
     const user = useSelector((state) => state.auth);
@@ -178,8 +179,13 @@ function NavbarHome() {
                 // Add the logic for the user menu or profile here
                 // For example:
                 <>
-                    <Nav.Link href="#/profile">Profile</Nav.Link>
-                    <Button onClick={() => handleLogout()}>Logout</Button>
+                    <NavDropdown title={auth.username} id="basic-nav-dropdown">
+                        <NavDropdown.Item href="#/profile">Profile</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item >
+                            <Button onClick={() => handleLogout()}>Logout</Button>
+                        </NavDropdown.Item>
+                    </NavDropdown>
                 </> 
                 )}
             </Nav>

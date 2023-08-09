@@ -11,6 +11,7 @@ import SingleProduct from './SingleProduct';
 import Success from './Success';
 import Cancel from './Cancel';
 import Profile from './Profile';
+import Footer from './Footer';
 
 const App = ()=> {
   const { auth } = useSelector(state => state);
@@ -28,6 +29,7 @@ const App = ()=> {
   return (
     <div>
       <NavbarHome />
+      
       <div>
         <Routes>
           <Route path='/' element={<Home />} />
@@ -41,6 +43,7 @@ const App = ()=> {
           <Route path="*" element={<Home />} />
         </Routes>
       </div>
+      <Footer />
   </div>
   );
 };
