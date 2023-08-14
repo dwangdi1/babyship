@@ -54,9 +54,9 @@ const SingleProduct = () => {
          <> 
             <div className="container vertical-center">
                <div className="row justify-content-center">
-                  <div className="col-md-6">
+                  <div className="col-md-5">
                   <div className="card">
-                        {oneProd.images?.length > 0 ? (
+                        {oneProd.images?.length > 1 ? (
             
                         <div id="carouselExampleIndicators" className="carousel slide">
                             <div className="carousel-indicators">
@@ -101,11 +101,16 @@ const SingleProduct = () => {
                             </button>
                         </div>
                         ) : (
-                                <p>No image available</p>
+                            oneProd.images?.length === 1 ? (
+                                <img src={oneProd.images[0]} alt="Access Image" className="card-img-top img-fluid" />
+                            ) : (
+                                <p>No image Available</p>
+
+                            )
                         )}
                         </div>
                     </div>
-                  <div className="col-md-6">
+                  <div className="col-md-7">
                      <h2> {oneProd.name}</h2>
 
                      <p className="product-detail">
