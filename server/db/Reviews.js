@@ -24,7 +24,6 @@ const Reviews = conn.define('review', {
 });
 
 Reviews.belongsTo(User, {foreignKey: 'userId'})
-//Reviews.belongsTo(Product, { foreignKey: 'productId' });
 
 
 module.exports = Reviews;

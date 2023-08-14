@@ -36,24 +36,27 @@ const AllProducts = () => {
     return (
         <div>
             <h1>All Products: </h1>
-            <Row xs={1} md={3}>
-                {products.map((product) => (
-                    <Col key={product.id} >
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Img variant="top" src={product.images[0]} />
-                            <Card.Body>
-                                <Card.Title>{product.name}</Card.Title>
-                                <Card.Text>
-                                    {product.description}
-                                </Card.Text>
-                                <Button href={`#/${product.id}`} variant="primary">Details</Button>
-                                <Button disabled={product.quantity === 0} onClick={() => handleAddToCart(product)} variant="primary">
-                                    {product.quantity > 0 ? <span>Add To Cart</span> : <span>Sold Out</span>}
-                                </Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
+            <Row xs={1} md={2} className="g-4">
+            {products.map((product) => (
+                <Col key={product.id}>
+                <Card style={{ height: '100%' }}>
+                    <Card.Img variant="top" style={{ backgroundColor:"white", height: '300px', objectFit: 'contain' }} src={product.images[0]} />
+                    <Card.Body style={{backgroundColor:"white", height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center' }}>                  <div>
+                        <Card.Title className="p-2" style={{backgroundColor:"white", marginBottom: "0"}}>{product.name}</Card.Title>
+                        <Card.Text style={{backgroundColor:"white"}}>
+                        {product.description}
+                        </Card.Text>
+                    </div>
+                    <div style={{backgroundColor:"white"}} class="d-grid gap-2 d-md-flex justify-content-md-center mt-2 ">
+                        <Button href={`#/${product.id}`} variant="primary">Details</Button>
+                        <Button disabled={product.quantity <= 0} onClick={() => handleAddToCart(product)} variant="primary">
+                        {product.quantity > 0 ? 'Add To Cart': 'Sold Out'}
+                        </Button>
+                    </div>
+                    </Card.Body>
+                </Card>
+                </Col>
+            ))}
             </Row>
             <ToastContainer
             position="top-center"

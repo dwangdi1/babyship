@@ -125,7 +125,13 @@ const syncAndSeed = async()=> {
       price: 7.45,
     }),
   ]);
-
+  
+  const review = await Reviews.create({
+    rating: 5,
+    comment: 'This product is amazing!',
+    productId: babyHat.id, // Assuming 'babyHat' is the product instance
+    userId: moe.id, // Assuming 'moe' is the user instance
+  });
   const cart = await ethyl.getCart();
   await ethyl.addToCart({ product: babyHat, quantity: 3});
   await ethyl.addToCart({ product: babyHat, quantity: 2});

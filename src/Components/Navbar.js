@@ -70,6 +70,8 @@ function NavbarHome() {
 
     const handleLogout = () => {
         dispatch(logout());
+        setItems([]);
+        setTotalPrice(0);
         navigate("/");
     }
 
@@ -222,7 +224,7 @@ function NavbarHome() {
                         ))}
                     </>
                 )}
-                <h1>Total: {totalPrice}</h1>
+                <h1>Total: {totalPrice.toFixed(2)}</h1>
                 <Button onClick={checkout} className="btn btn-success">Checkout</Button>
             </Modal.Body>         
 

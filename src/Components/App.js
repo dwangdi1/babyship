@@ -27,7 +27,7 @@ const App = ()=> {
   }, [auth]);
 
   return (
-    <div>
+    <div style={{backgroundColor:"#F5E4DC"}}>
       <NavbarHome />
       
       <div>

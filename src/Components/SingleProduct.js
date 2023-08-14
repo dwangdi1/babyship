@@ -23,7 +23,6 @@ const SingleProduct = () => {
    
    useEffect(() => {
       const foundProd = products.find((product) => product.id === id);
-      console.log("foundProd " + foundProd)
       if (foundProd) {
          setOneProd(foundProd);
          setInventory(foundProd.quantity);
@@ -49,10 +48,6 @@ const SingleProduct = () => {
       }
    };
 
-   const handleDelete = () => {
-      dispatch(deleteProduct(oneProd));
-      navigate("/");
-   };
 
          
       return (
@@ -129,9 +124,10 @@ const SingleProduct = () => {
                      </p>
                         <div className="d-flex justify-content-start">
                            <div className="mt-3">
-                              <div className="input-group text-center">
+                              <div className="d-flex input-group text-center">
                                  <button
                                     className="btn btn-outline-secondary"
+                                    style={{backgroundColor:"white"}}
                                     type="button"
                                     onClick={() => decrementQ(quantity)}>
                                     -
@@ -144,6 +140,7 @@ const SingleProduct = () => {
                                  />
                                  <button
                                     className="btn btn-outline-secondary"
+                                    style={{backgroundColor:"white"}}
                                     type="button"
                                     onClick={() => incrementQ(quantity)}
                                     disabled={quantity >= oneProd.quantity}>
@@ -154,11 +151,12 @@ const SingleProduct = () => {
                            <div className="d-flex justify-content-start">
                               <button
                                  className="btn btn-outline-dark mt-3 me-2 ms-2"
+                                 disabled={oneProd.quantity <= 0}
                                  onClick={() => {
                                     dispatch(updateProductQuantity({ product: oneProd, quantity: quantity }));
                                     dispatch(addToCart({ product: oneProd, quantity }));
                                  }}>
-                                 Add to Cart
+                                 {oneProd.quantity <= 0 ? "Sold Out" : "Add to Cart"}
                               </button>
                               <Link to="/">
                                  <button className="btn btn-outline-dark mt-3">CONTINUE SHOPPING</button>

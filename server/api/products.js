@@ -1,11 +1,23 @@
 const express = require('express');
 const app = express.Router();
 const Product = require("../db/Product");
+const Reviews = require("../db/Reviews");
+const User = require("../db/User");
 
-app.get('/', async(req,res,next) => {
+
+app.get('/', async (req, res, next) => {
     try {
-        const products = await Product.findAll();
-        res.send(products)
+        const products = await Product.findAll({
+            include: [
+                {
+                    model: Reviews,
+                    as: 'reviews',
+                    include: User, // Include the associated user for each review
+                },
+            ],
+        });
+
+        res.send(products);
     } catch (error) {
         next(error);
     }
@@ -22,6 +34,8 @@ app.get("/top-sellers", async (req, res, next) => {
       next(err);     
     }
  });
+
+
 
 app.get('/:id', async(req, res, next) => { 
     try {
@@ -62,7 +76,7 @@ app.put('/:id', async(req, res, next)=> {
     }
   });
 
- 
+
  
 
   
