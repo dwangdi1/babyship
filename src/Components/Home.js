@@ -36,6 +36,35 @@ const Home = ()=> {
 
   return (
     <div>
+        <div className="text-center position-relative">
+          <img
+              src="https://images.pexels.com/photos/15880584/pexels-photo-15880584/free-photo-of-little-baby-in-yellow-rompers-on-a-fuzzy-blanket.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              alt="#"
+              className="img-fluid w-100 h-60 opacity-85 mb-5"
+          />
+          <div
+              className="position-absolute top-50 start-50 translate-middle"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.4)",
+                padding: "10px",
+                borderRadius: "5px",
+              }}
+          >
+              <h1
+                className="fas fa-cat"
+                style={{
+                    fontSize: "3.5rem",
+                    letterSpacing: "3px",
+                    color: "black",
+                    fontWeight: "bold",
+                    fontBorder: "1px solid black",
+                }}
+              >
+                Beanies & Blankets
+              </h1>
+          </div>
+        </div>
+
       <h2 style={{marginLeft: "20px"}}> Best Sellers: </h2>
         <div style={{marginLeft:"20px", marginRight:"20px"}}>
           <Row xs={1} md={2} className="g-4">
