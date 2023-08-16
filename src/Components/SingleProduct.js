@@ -48,6 +48,10 @@ const SingleProduct = () => {
       }
    };
 
+   if(!oneProd) {
+        return <div> Loading...</div>
+   }
+
 
          
       return (
@@ -171,6 +175,26 @@ const SingleProduct = () => {
                   </div>
                </div>
                
+            </div>
+            <div>   s
+                                 
+                {oneProd && oneProd.reviews ? (
+                    oneProd.reviews.length === 0 ? (
+                        <div>
+                            <h3>No Reviews</h3>
+                        </div>
+                    ) : (
+                        oneProd.reviews.map((review) => (
+                            <div key={review.id}>
+                                <h3>{review.user.username}</h3>
+                                <p>Rating: {review.rating}</p>
+                                <p>{review.comment}</p>
+                            </div>
+                        ))
+                    )
+                ) : (
+                    <div>Loading reviews...</div>
+                )}
             </div>
          </>
          
