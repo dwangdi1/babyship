@@ -114,25 +114,6 @@ const Login = ()=> {
       </Container>
     </div>
 
-
-    // <div>
-    //   <h2>Login</h2>
-    //   <form onSubmit={ login }>
-    //     <input
-    //       placeholder='username'
-    //       value = { credentials.username }
-    //       name = 'username'
-    //       onChange = { onChange }
-    //       />
-    //     <input
-    //       placeholder='password'
-    //       name = 'password'
-    //       value={ credentials.password }
-    //       onChange = { onChange }
-    //     />
-    //     <button>Login</button>
-    //   </form>
-    // </div>
   );
 };
 

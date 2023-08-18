@@ -55,7 +55,6 @@ export const deleteProduct = createAsyncThunk("deleteProduct", async (product, {
 export const updateProductQuantity = createAsyncThunk("updateProductQuantity", async ({ product, quantity }) => {
    try {
       const token = window.localStorage.getItem("token");
-      console.log('token:',token);
       if(token){
          const response = await axios.put(
             `/api/products/${product.id}`,
@@ -69,7 +68,6 @@ export const updateProductQuantity = createAsyncThunk("updateProductQuantity", a
          return response.data;
 
       }else{
-         console.log('this prove we are going to check cart with no token:')
          const response = await axios.put(
             `/api/products/${product.id}`,
             { product, quantity },
@@ -82,6 +80,20 @@ export const updateProductQuantity = createAsyncThunk("updateProductQuantity", a
       console.log(err);
    }
 });
+
+
+export const createReview = createAsyncThunk("createReview", async({newReview, prodId}) => {
+    try {
+        console.log(prodId)
+        const token = window.localStorage.getItem("token");
+        if(token){
+            const response = await axios.post(`/api/products/${prodId}/review`, {newReview}, {headers : {authorization : token}});
+            return response.data;
+        }
+    } catch (err) {
+        console.log(err);
+    }
+})
 
 const productSlice = createSlice({
    name: "products",
@@ -104,6 +116,10 @@ const productSlice = createSlice({
       builder.addCase(updateProductQuantity.fulfilled, (state, action) => {
          return state.map((product) => (product.id === action.payload.id ? action.payload : product));
       });
+      builder.addCase(createReview.fulfilled, (state,action) => {
+        const updatedProduct = state.find((prod) => prod.id === action.payload.productId);
+        updatedProduct.reviews.push(action.payload.review)
+      })
    }
 });
 

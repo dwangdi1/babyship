@@ -78,7 +78,39 @@ app.put('/:id', async(req, res, next)=> {
 
 
  
+  app.post('/:productId/review', async (req, res) => {
+    const productId = req.params.productId;
+    const newReviewData = req.body.newReview; 
+  
+    try {
+        const token = req.headers.authorization
+        if(token){
+            // Find the product
+        const product = await Product.findByPk(productId);
+    
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+    
+        // Create a new review
+        const newReview = await Reviews.create({
+            ...newReviewData,
+            productId: product.id,
+        });
+    
+        return res.status(201).json(newReview);
+        }
+      
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  });
 
+  
+  
+  
+  
   
   module.exports = app;
  

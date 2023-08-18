@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { addToCart, fetchProducts } from "../store";
+import { addToCart, createReview, fetchProducts } from "../store";
 import { deleteProduct, updateProductQuantity } from "../store";
 
 const SingleProduct = () => {
@@ -15,6 +15,12 @@ const SingleProduct = () => {
    const isAdmin = auth.isAdmin;
    const [limitExceeded, setLimiteExceeded] = useState(false);
    const [showPopUp, setShowPopUp] = useState(false);
+   const [submittedReview, setSubmittedReview] = useState({
+        title: "",
+        rating: 1,
+        comment: "",
+        userId: auth.id
+   });
 
 
    useEffect(() => {
@@ -47,6 +53,16 @@ const SingleProduct = () => {
          setQuantity(value);
       }
    };
+
+   const onChange = (ev) => {
+        setSubmittedReview({...submittedReview, [ev.target.name]: ev.target.value })
+   }
+
+   const handleReviewSubmit = async (ev) => {
+        const reviewWithUser = { ...submittedReview, userId: auth.id };
+        dispatch(createReview({ newReview: reviewWithUser, prodId: oneProd.id }));
+        dispatch(fetchProducts());
+    }
 
    if(!oneProd) {
         return <div> Loading...</div>
@@ -176,20 +192,54 @@ const SingleProduct = () => {
                </div>
                
             </div>
-            <div>   s
-                                 
+            <div>
+                {auth.id ? (
+                    <div>
+                        <h1>Leave a Review </h1>
+                        <form onSubmit={(ev) => handleReviewSubmit(ev)}>
+                            <div class="form-group">
+                                <label for="FormTitle">Add a Headline</label>
+                                <input type="text"  value={submittedReview.title} name="title" onChange={onChange} class="form-control" id="FormTitle" placeholder="What's most important to know?" />
+                            </div>
+                            <div className="form-group">
+                                <label for="formSelectRating">Select Overall Rating</label>
+                                <select value={submittedReview.rating} name="rating" onChange={onChange} className="form-control" id="formSelectRating">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label for="reviewFormTextArea">Add a Written Review</label>
+                                <textarea value={submittedReview.comment} name="comment" onChange={onChange} className="form-control" id="reviewFormTextArea" rows="3" placeholder="What did you like or dislike?"></textarea>
+                            </div>
+                            <button type="submit" className="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+
+                ): (
+                    <div><h1>Please Login To Leave A Review</h1></div>
+                    
+                ) }
+            </div>
+            <div>      
                 {oneProd && oneProd.reviews ? (
                     oneProd.reviews.length === 0 ? (
                         <div>
                             <h3>No Reviews</h3>
                         </div>
                     ) : (
-                        oneProd.reviews.map((review) => (
+                        oneProd.reviews?.map((review) => (
+                        
                             <div key={review.id}>
-                                <h3>{review.user.username}</h3>
+                                <h1>{review.title}</h1>
+                                {review.user && <h3>{review.user.username}</h3>}                            
                                 <p>Rating: {review.rating}</p>
                                 <p>{review.comment}</p>
                             </div>
+                           
                         ))
                     )
                 ) : (

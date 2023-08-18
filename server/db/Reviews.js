@@ -9,6 +9,9 @@ const Reviews = conn.define('review', {
         primaryKey: true,
         defaultValue: UUIDV4
     },
+    title: {
+        type: TEXT,
+    },
     rating: {
         type: INTEGER,
         allowNull: false,

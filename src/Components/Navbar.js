@@ -215,7 +215,7 @@ function NavbarHome() {
                             <div>
                                 <h5>{item.product.name}</h5>
                                 <p>Quantity: {item.quantity}</p>
-                                <p>Price: {item.product.price * item.quantity}</p>
+                                <p>Price: ${item.product.price * item.quantity}</p>
                             </div>
                             <button className="btn btn-danger" 
                                 onClick={() => handleRemoveFromCart(item.product)}
@@ -224,7 +224,7 @@ function NavbarHome() {
                         ))}
                     </>
                 )}
-                <h1>Total: {totalPrice.toFixed(2)}</h1>
+                <h1>Total: ${totalPrice.toFixed(2)}</h1>
                 <Button onClick={checkout} className="btn btn-success">Checkout</Button>
             </Modal.Body>         
 
